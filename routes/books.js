@@ -15,15 +15,15 @@ function asyncHandler(cb){
   }
 }
 
-/* Get a new books page*/
+/* Create a new form for new books*/
 
 router.get('/new', asyncHandler(async(req, res) => {
-  res.render('new');
+  res.render('books/new' , { book: {}, title: "New Book"});
 }))
 
 /* POST create movie */
 
-router.post('create', asyncHandler(async(req, res, next) => {
+router.post('/', asyncHandler(async(req, res, next) => {
   const book = await Book.create(req.body);
   res.redirect('books/' + book.id)
 }));
@@ -33,7 +33,7 @@ router.post('create', asyncHandler(async(req, res, next) => {
 
 router.get("/:id", asyncHandler(async (req, res) => {
   const book = await Book.findByPk(req.params.id);
-  res.render("book_detail" , { book: book, title: book.title });
+  res.render("books/show" , { book: book, title: book.title });
 }));
 
 

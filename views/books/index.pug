@@ -1,0 +1,25 @@
+extends layout.pug
+
+block content
+
+
+    h1 Books
+    p
+      a.button(href='new') Create New Book
+    table
+      thead
+        tr
+          th Title
+          th Author
+          th Genre
+          th Year
+      tbody
+        // map this part
+
+        each book in books
+          tr
+            td
+              a= book.title
+            td= book.author
+            td= book.genre
+            td= book.year

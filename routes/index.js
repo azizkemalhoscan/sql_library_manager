@@ -6,7 +6,7 @@ var router = express.Router();
 // Changed res.render('books', { title: 'Books' }); to => res.redicrect
 
 router.get('/', function(req, res, next) {
-  res.redirect('books');
+  res.redirect('/books');
 });
 
 module.exports = router;

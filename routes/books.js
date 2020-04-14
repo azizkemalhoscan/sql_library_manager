@@ -15,12 +15,17 @@ function asyncHandler(cb){
   }
 }
 
+/* Get a new books page*/
+
+router.get('/new', asyncHandler(async(req, res) => {
+  res.render('new');
+}))
 
 /* POST create movie */
 
-router.post('/', asyncHandler(async(req, res, next) => {
+router.post('create', asyncHandler(async(req, res, next) => {
   const book = await Book.create(req.body);
-  res.redirect('/books' + book.id)
+  res.redirect('books/' + book.id)
 }));
 
 
@@ -28,7 +33,7 @@ router.post('/', asyncHandler(async(req, res, next) => {
 
 router.get("/:id", asyncHandler(async (req, res) => {
   const book = await Book.findByPk(req.params.id);
-  res.render("/books/book_detail" , { book: book, title: book.title });
+  res.render("book_detail" , { book: book, title: book.title });
 }));
 
 
@@ -36,6 +41,7 @@ router.get("/:id", asyncHandler(async (req, res) => {
 
 router.get('/', asyncHandler(async( req, res) => {
   const books = await Book.findAll({ order: [["createdAt", "DESC"]]});
+  console.log(books);
   res.render('books', { books, title: "Aziz Get all books"});
 }));
 
@@ -43,14 +49,14 @@ router.get('/', asyncHandler(async( req, res) => {
 /* GET / retrieve book to update */
 router.get('/:id/edit', asyncHandler(async (req, res) => {
   const book = await Book.findByPk(req.params.id);
-  res.render('books/edit', { book, title: 'Edit book' });
+  res.render('edit', { book, title: 'Edit book' });
 }));
 
 /* PUT update book */
 router.put('/:id/edit', asyncHandler (async (req, res) => {
   const book = await Book.findByPk(req.params.id);
   await book.update(req.body);
-  res.redirect('/books/' + book.id);
+  res.redirect('books/' + book.id);
 }));
 
 
@@ -58,7 +64,7 @@ router.put('/:id/edit', asyncHandler (async (req, res) => {
 
 router.get('/:id/delete', asyncHandler( async(req, res) => {
   const book = Book.findByPk(req.params.id);
-  res.render("books/delete", { book, title: "Delete book"})
+  res.render("delete", { book, title: "Delete book"})
 }))
 
 /* Delete book */

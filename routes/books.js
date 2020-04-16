@@ -98,7 +98,7 @@ router.post('/books/:id/delete', asyncHandler( async(req, res) => {
     await book.destroy();
     res.redirect('/books');
   } else {
-    res.sendStatus(404);
+    throw error;
   }
 }));
 

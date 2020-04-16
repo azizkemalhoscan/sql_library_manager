@@ -24,18 +24,23 @@ app.use(books);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404, "There is a huge emptiness here!!"));
+  const error = new Error('Sorry cannot find it');
+  error.status = 404;
+  next(error);
 });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+// error handler
+app.use(function(error, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.error = error;
+  res.status(error.status);
+  if(error.status === 404){
+    res.render('page-not-found');
+    console.log(error.message)
+  } else {
+    res.render('error')
+  }
 });
 
 module.exports = app;

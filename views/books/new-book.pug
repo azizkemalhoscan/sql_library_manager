@@ -3,6 +3,7 @@ extend layout
 
 block content
     h1 New Book
+    include error
     form(method='post', action=`/books/new`, onsubmit="return confirm('Do you really want to ADD this book?');")
 
       p

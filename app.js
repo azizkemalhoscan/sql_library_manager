@@ -23,22 +23,22 @@ app.use('/', routes);
 app.use(books);
 
 // catch 404 and forward to error handler
-app.use((req, res, next) => {
-  const err = new Error('Sorry cannot find it');
-  err.status = 404;
-  console.log('404 handler called')
-  next(err);
-  console.log('404 handler called')
-});
+
 
 
 // error handler
 app.use((err, req, res, next) => {
-  // set locals, only providing error in development
-  res.locals.error = err;
   res.status(err.status || 500);
   console.log('500 handler called');
-  res.render('error');
+  res.render('books/service-error');
+  next(err);
 });
+
+
+app.use((err, req, res, next) => {
+  res.status(err.status || 404)
+  console.log('this is 404')
+  res.render('books/page-not-found')
+})
 
 module.exports = app;

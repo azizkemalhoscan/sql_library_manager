@@ -26,7 +26,9 @@ app.use(books);
 app.use((req, res, next) => {
   const err = new Error('Sorry cannot find it');
   err.status = 404;
+  console.log('404 handler called')
   next(err);
+  console.log('404 handler called')
 });
 
 
@@ -34,14 +36,9 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.error = err;
-  res.status(err.status);
-  if(err.status === 404){
-    res.render('page-not-found');
-    console.log(err.message)
-  } else {
-    res.render('error')
-  }
-  next(err);
+  res.status(err.status || 500);
+  console.log('500 handler called');
+  res.render('error');
 });
 
 module.exports = app;

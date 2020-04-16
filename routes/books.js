@@ -9,10 +9,9 @@ var Book = require('../models').Book;
 function asyncHandler(cb){
   return async(req, res, next) => {
     try {
-      await cb(req, res, next)
+      await cb(req, res, next);
     } catch(error){
-      res.status(500).send(error);
-      console.log(error.status)
+      next(error);
     }
   }
 }

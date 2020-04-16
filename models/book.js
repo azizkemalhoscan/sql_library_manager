@@ -1,21 +1,18 @@
 
 'use strick';
 
-//requiring modules
+
 const Sequelize = require('sequelize');
 
-//export the initialized Book model
+// Defined a model for database. Model has a title, an author, genre and year
 module.exports = (sequelize) => {
-    //define a book model
     class Book extends Sequelize.Model {}
-    //initialize & configure the model
     Book.init({
         title: {
             type: Sequelize.STRING,
             allowNull: false,
             validate: {
                 notEmpty: {
-                    //custom error message
                     msg: 'Please enter a "title"'
                 }
             },
@@ -25,7 +22,6 @@ module.exports = (sequelize) => {
             allowNull: false,
             validate: {
                 notEmpty: {
-                    //custom error message
                     msg: 'Please enter an "author"'
                 }
             },

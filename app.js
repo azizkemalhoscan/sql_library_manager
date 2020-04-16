@@ -23,24 +23,25 @@ app.use('/', routes);
 app.use(books);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  const error = new Error('Sorry cannot find it');
-  error.status = 404;
-  next(error);
+app.use((req, res, next) => {
+  const err = new Error('Sorry cannot find it');
+  err.status = 404;
+  next(err);
 });
 
 
 // error handler
-app.use(function(error, req, res, next) {
+app.use((err, req, res, next) => {
   // set locals, only providing error in development
-  res.locals.error = error;
-  res.status(error.status);
-  if(error.status === 404){
+  res.locals.error = err;
+  res.status(err.status);
+  if(err.status === 404){
     res.render('page-not-found');
-    console.log(error.message)
+    console.log(err.message)
   } else {
     res.render('error')
   }
+  next(err);
 });
 
 module.exports = app;

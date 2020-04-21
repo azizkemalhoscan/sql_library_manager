@@ -69,6 +69,7 @@ router.get("/books/:id", asyncHandler(async (req, res) => {
 
 
 /* Update books
+
 */
 router.post('/books/:id', asyncHandler (async (req, res) => {
   let book;
@@ -82,7 +83,9 @@ router.post('/books/:id', asyncHandler (async (req, res) => {
     }
   } catch(error){
     if(error.name === "SequelizeValidationError"){
-      book = await Book.build(req.body);
+      console.log(req.params.id)
+      // Here I erroneously set book to below snippet. Thats why my book object did not contain id
+      await Book.build(req.body);
       res.render('books/update-book', { book: book, errors: error.errors, title: "New Book"})
     } else {
       throw error;

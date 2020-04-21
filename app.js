@@ -22,8 +22,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use(books);
 
-// catch 404 and forward to error handler
-
 
 
 // error handler
@@ -35,10 +33,17 @@ app.use((err, req, res, next) => {
 });
 
 
-app.use((err, req, res, next) => {
-  res.status(err.status || 404)
-  console.log('this is 404')
-  res.render('books/page-not-found')
+
+app.use((req, res, next) => {
+  res.status(404).render('books/page-not-found');
 })
+
+// This is Inccorect
+
+// app.use((err, req, res, next) => {
+//   res.status(err.status || 404)
+//   console.log('this is 404')
+//   res.render('books/page-not-found')
+// })
 
 module.exports = app;
